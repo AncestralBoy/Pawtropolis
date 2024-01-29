@@ -81,11 +81,17 @@ public class Room {
         return itemsDescription;
     }
 
-    public String getConnectedRoomsNames() {
+    public String getDoorStatus() {
+        if (isLocked) {
+            return "closed";
+        } return "open";
+    }
+
+    public String getConnectedRoomsDescription() {
         String connectedRoom;
         connectedRoom = connectedRooms.entrySet()
                 .stream()
-                .map(e -> e.getKey().getName() + ": " + e.getValue().getName() + ", " )
+                .map(e -> e.getKey().getName() + ": " + e.getValue().getName() + ", " + e.getValue().getDoorStatus() + "; ")
                 .collect(Collectors.joining());
         connectedRoom = connectedRoom.substring(0,connectedRoom.length() - 2);
         return connectedRoom;
@@ -93,7 +99,7 @@ public class Room {
 
     public String look(){
         return "You are in " + getName() +  "\n" + getDescription() + "\nItems:\n" + getItemsNames()
-                +"\nNCP:\n" + getNpcNames() + "\n" + "Connected rooms: \n" + getConnectedRoomsNames() + "\n";
+                +"\nNCP:\n" + getNpcNames() + "\n" + "Connected rooms: \n" + getConnectedRoomsDescription() + "\n";
 
     }
 
