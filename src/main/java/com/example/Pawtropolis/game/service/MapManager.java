@@ -140,6 +140,9 @@ public class MapManager {
         lockedRoomMap.put(keyItem, lockedRoom);
     }
 
+    public Room getLockedRoomByItem(Item keyItem) {
+        return lockedRoomMap.get(keyItem);
+    }
 
     public String lookCurrentRoom() {
         return getCurrentRoom().look();
