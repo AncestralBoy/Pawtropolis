@@ -5,6 +5,7 @@ import com.example.Pawtropolis.game.command.implementation.UnknownCommand;
 import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.List;
 public class CommandFactory{
     private final ApplicationContext context;
 
+    @Autowired
     private CommandFactory(@NonNull ApplicationContext context) {
         this.context = context;
     }

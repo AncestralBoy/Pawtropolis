@@ -7,6 +7,7 @@ import com.example.Pawtropolis.game.model.Player;
 
 import lombok.Getter;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class GameManager {
     private final MapManager mapManager;
     private final CommandFactory commandFactory;
 
+    @Autowired
     private GameManager(Player player, CommandFactory commandFactory, MapManager mapManager) {
         this.player = player;
         this.mapManager = mapManager;

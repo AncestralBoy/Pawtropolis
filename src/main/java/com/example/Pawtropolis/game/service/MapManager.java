@@ -23,6 +23,7 @@ public class MapManager {
     private final ZooManager zooManager;
     private Room currentRoom;
 
+    @Autowired
     private MapManager(ZooManager zooManager){
         currentRoom = new Room("Basement", "a dark, cramped place");
         this.zooManager = zooManager;
