@@ -2,6 +2,7 @@ package com.example.Pawtropolis.game.model;
 
 import com.example.Pawtropolis.animal.model.Animal;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -14,7 +15,9 @@ public class Room {
     private final String name;
     @Getter
     private final String description;
-
+    @Getter
+    @Setter
+    private boolean isLocked;
     private final Map<Direction, Room> connectedRooms;
     private final List<Item> items;
     private final List<Animal> npc;
@@ -22,6 +25,7 @@ public class Room {
     public Room(String name, String description) {
         this.name = name;
         this.description = description;
+        isLocked = false;
         connectedRooms = new EnumMap<>(Direction.class);
         items = new ArrayList<>();
         npc = new ArrayList<>();
