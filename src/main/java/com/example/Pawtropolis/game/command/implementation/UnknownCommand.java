@@ -14,6 +14,7 @@ public class UnknownCommand extends Command {
         super(gameManager);
     }
 
+    @Override
     public Void execute(){
         log.log(Level.WARNING, "Unknown command!");
         return null;
