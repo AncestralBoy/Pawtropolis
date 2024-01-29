@@ -160,6 +160,22 @@ public class MapManager {
         return getCurrentRoom().getItemByString(itemName);
     }
 
+    public Room getRoomByDirection(String direction) {
+        Direction currentDirection = Direction.getDirectionByString(direction);
+
+        if (currentDirection == null) {
+            log.warning("Incorrect direction");
+            return null;
+        }
+        else if (currentRoom.getConnectedRoomByDirection(currentDirection) != null) {
+            return currentRoom.getConnectedRoomByDirection(currentDirection);
+        }
+        else {
+            log.warning("No room in this direction");
+            return null;
+        }
+    }
+
     public String changeCurrentRoom(String direction){
         Direction currentDirection = Direction.getDirectionByString(direction);
 
