@@ -177,17 +177,7 @@ public class MapManager {
     }
 
     public String changeCurrentRoom(String direction){
-        Direction currentDirection = Direction.getDirectionByString(direction);
-
-        if (currentDirection == null)
-            return ("Incorrect direction");
-
-        else if(currentRoom.getConnectedRoomByDirection(currentDirection) != null){
-            currentRoom = currentRoom.getConnectedRoomByDirection(currentDirection);
-            return (getCurrentRoom().look());
-        }
-        else{
-            return ("No room in this direction");
-        }
+        currentRoom = getRoomByDirection(direction);
+        return getCurrentRoom().look();
     }
 }
