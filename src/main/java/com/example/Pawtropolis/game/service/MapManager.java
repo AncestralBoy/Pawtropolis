@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 @Log
@@ -22,11 +24,13 @@ import java.util.logging.Level;
 public class MapManager {
     private final ZooManager zooManager;
     private Room currentRoom;
+    private final Map<Item, Room> lockedRoomMap;
 
     @Autowired
     private MapManager(ZooManager zooManager){
         currentRoom = new Room("Basement", "a dark, cramped place");
         this.zooManager = zooManager;
+        lockedRoomMap = new HashMap<>();
     }
 
     @PostConstruct
@@ -42,6 +46,17 @@ public class MapManager {
         Room room10 = new Room( "Mountain", "you are on the top of a very high mountain, there is snow everywhere, the air is fresh");
         Room room11 = new Room( "Treasure Room", "You've never seen so much wealth in one place");
         Room room12 = new Room( "Boos Room", "This place is unlike any you have encountered, the calmness that seems to be there snows you");
+
+        Item item1 = new Item("Potion", "Heals 20 HP", 1);
+        Item item2 = new Item("Penny", "A common coin", 2);
+        Item item3 = new Item("Super Potion", "Heals 50 HP", 1);
+        Item item4 = new Item("Key", "An old and rusty key", 2);
+        Item item5 = new Item("Full Heal", "Heals all status conditions", 1);
+        Item item6 = new Item("Bomb", "Can be dangerous", 2);
+        Item item7 = new Item("Golden Key", "Opens a special door", 2);
+        Item item8 = new Item("Sword", "+10 atk", 1);
+        Item item9 = new Item("Shield", "+10 def", 1);
+        Item item10 = new Item("Bow", "+10 sp.atk, +10speed", 1);
 
         //Aggiunta Npc nelle stanze
         zooManager.populateZoo();
@@ -62,16 +77,16 @@ public class MapManager {
         room12.addNpc(animals.get(8));
 
         //Aggiunta oggetti nelle stanze
-        room3.addItem(new Item("Potion", "Heals 20 HP", 1));
-        room3.addItem(new Item("Super Potion", "Heals 50 HP", 1));
-        room6.addItem(new Item("Hyper Potion", "Heals 200 HP", 2));
-        room6.addItem(new Item("Full Heal", "Heals all status conditions", 1));
-        room7.addItem(new Item("Full Restore", "Heals all HP and status conditions", 2));
-        room8.addItem(new Item("Sword", "+10 atk", 1));
-        room9.addItem(new Item("Shield", "+10 def", 1));
-        room10.addItem(new Item("Armor", "+50 def, -20 speed", 2));
-        room11.addItem(new Item("Bow", "+10 sp.atk, +10speed", 1));
-        room11.addItem(new Item("Gun", "+20 sp.atk, +20 sp.def", 2));
+        room3.addItem(item1);
+        room3.addItem(item2);
+        room6.addItem(item3);
+        room6.addItem(item4);
+        room7.addItem(item5);
+        room8.addItem(item6);
+        room9.addItem(item7);
+        room10.addItem(item8);
+        room11.addItem(item9);
+        room11.addItem(item10);
 
         //Collegamento delle stanze
         connectRooms(currentRoom, room3, Direction.WEST);
@@ -84,6 +99,16 @@ public class MapManager {
         connectRooms(room9, room10, Direction.EAST);
         connectRooms(room10, room11, Direction.EAST);
         connectRooms(room11, room12, Direction.SOUTH);
+
+        setLockedRoom(room6);
+        setLockedRoom(room9);
+        setLockedRoom(room11);
+        setLockedRoom(room12);
+
+        setLockedRoomMap(item2, room6);
+        setLockedRoomMap(item4, room9);
+        setLockedRoomMap(item6, room11);
+        setLockedRoomMap(item7, room12);
     }
 
     public void connectRooms(Room entryRoom, Room exitRoom, Direction direction){
@@ -106,6 +131,15 @@ public class MapManager {
             }
         }
     }
+
+    public void setLockedRoom(Room room) {
+        room.setLocked(true);
+    }
+
+    public void setLockedRoomMap(Item keyItem, Room lockedRoom) {
+        lockedRoomMap.put(keyItem, lockedRoom);
+    }
+
 
     public String lookCurrentRoom() {
         return getCurrentRoom().look();
