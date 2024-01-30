@@ -6,31 +6,34 @@ import com.example.Pawtropolis.game.service.console.InputReader;
 import com.example.Pawtropolis.game.model.Player;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Getter
-@Log
+@Slf4j
 @Service
 public class GameManager {
     private final Player player;
     private final MapManager mapManager;
     private final CommandFactory commandFactory;
+    @Setter
+    private boolean gameEnded;
 
     @Autowired
     private GameManager(Player player, CommandFactory commandFactory, MapManager mapManager) {
         this.player = player;
         this.mapManager = mapManager;
         this.commandFactory = commandFactory;
+        gameEnded = false;
     }
 
     public void runGame() {
-        boolean gameEnded = false;
         String input;
-        String output;
         setPlayerName();
         System.out.println("Hey " + player.getName() + "! Welcome to Pawtropolis!");
         while (!gameEnded){
@@ -39,16 +42,7 @@ public class GameManager {
             input = InputReader.readString();
             List<String> readCommand = InputHandler.processInput(input);
             Command currentCommand = (Command) commandFactory.getInstance(readCommand);
-            output = (String) currentCommand.execute();
-
-            if (output != null) {
-                if (!output.trim().equalsIgnoreCase("quit"))
-                    System.out.println(output);
-                else {
-                    log.info(output);
-                    gameEnded = true;
-                }
-            }
+            currentCommand.execute();
         }
     }
 

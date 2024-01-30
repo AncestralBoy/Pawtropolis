@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public abstract class ParametrizedCommand<T> extends Command<T> {
+public abstract class ParametrizedCommand extends Command {
     private List<String> parameter;
 
     protected ParametrizedCommand(GameManager gameManager){

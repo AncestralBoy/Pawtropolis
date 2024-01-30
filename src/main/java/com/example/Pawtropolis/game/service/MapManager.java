@@ -9,6 +9,7 @@ import com.example.Pawtropolis.game.model.Room;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-@Log
+@Slf4j
 @Getter
 @Service
 public class MapManager {
@@ -64,7 +65,7 @@ public class MapManager {
         try{
             animals = zooManager.getAnimalsList();
         } catch (AnimalNotFound e){
-            log.log(Level.WARNING,"No Npc found!!");
+            log.warn("No Npc found!");
         }
         room2.addNpc(animals.get(0));
         room4.addNpc(animals.get(1));
@@ -144,8 +145,8 @@ public class MapManager {
         return lockedRoomMap.get(keyItem);
     }
 
-    public String lookCurrentRoom() {
-        return getCurrentRoom().look();
+    public void lookCurrentRoom() {
+        getCurrentRoom().look();
     }
 
     public void removeItemInRoom(Item item){
@@ -164,20 +165,20 @@ public class MapManager {
         Direction currentDirection = Direction.getDirectionByString(direction);
 
         if (currentDirection == null) {
-            log.warning("Incorrect direction");
+            log.warn("Incorrect direction");
             return null;
         }
         else if (currentRoom.getConnectedRoomByDirection(currentDirection) != null) {
             return currentRoom.getConnectedRoomByDirection(currentDirection);
         }
         else {
-            log.warning("No room in this direction");
+            log.warn("No room in this direction");
             return null;
         }
     }
 
-    public String changeCurrentRoom(String direction){
+    public void changeCurrentRoom(String direction){
         currentRoom = getRoomByDirection(direction);
-        return getCurrentRoom().look();
+        getCurrentRoom().look();
     }
 }

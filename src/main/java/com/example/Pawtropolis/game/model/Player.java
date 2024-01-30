@@ -27,8 +27,8 @@ public class Player {
         bag.removeItem(item);
     }
 
-    public String geItemsInBag(){
-        return bag.getItemsToString();
+    public void geItemsInBag(){
+        bag.getItemsToString();
     }
 
     public Item getItemInBagByString(String string){

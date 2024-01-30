@@ -3,6 +3,7 @@ package com.example.Pawtropolis.game.model;
 import com.example.Pawtropolis.animal.model.Animal;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class Room {
     @Getter
     private final String name;
@@ -97,9 +99,9 @@ public class Room {
         return connectedRoom;
     }
 
-    public String look(){
-        return "You are in " + getName() +  "\n" + getDescription() + "\nItems:\n" + getItemsNames()
-                +"\nNCP:\n" + getNpcNames() + "\n" + "Connected rooms: \n" + getConnectedRoomsDescription() + "\n";
+    public void look(){
+        log.warn("\n You are in " + getName() +  "\n" + getDescription() + "\nItems:\n" + getItemsNames()
+                +"\nNCP:\n" + getNpcNames() + "\n" + "Connected rooms: \n" + getConnectedRoomsDescription() + "\n");
 
     }
 

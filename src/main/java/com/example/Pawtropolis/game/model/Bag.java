@@ -2,11 +2,13 @@ package com.example.Pawtropolis.game.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class Bag {
     @Getter
     private final int maxSlots;
@@ -22,15 +24,15 @@ public class Bag {
         this.items = new ArrayList<>();
     }
 
-    public String getItemsToString(){
+    public void getItemsToString(){
         if(!items.isEmpty()){
             String msg = items.stream()
                     .map(i -> i.getName() +", ")
                     .collect(Collectors.joining());
-            return msg.substring(0, msg.length() - 2) + "\n" + currentFreeSlots + " slots remaining" ;
+            log.info("\n" + msg.substring(0, msg.length() - 2) + "\n" + currentFreeSlots + " slots remaining" );
         }
         else
-            return "No items in bag";
+            log.warn("No items in bag");
     }
 
     public boolean addItem(Item item){

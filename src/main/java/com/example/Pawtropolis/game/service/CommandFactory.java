@@ -26,7 +26,7 @@ public class CommandFactory{
             Object commandInstance = this.context.getBean(wordList.getFirst() + "Command");
             if (commandInstance instanceof ParametrizedCommand) {
                 wordList.removeFirst();
-                ((ParametrizedCommand<?>) commandInstance).setParameter(wordList);
+                ((ParametrizedCommand) commandInstance).setParameter(wordList);
             } else if (wordList.size() > 1) {
                 return this.context.getBean(UnknownCommand.class);
             }

@@ -1,6 +1,7 @@
 package com.example.Pawtropolis.game.service.console;
 
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-@Log
+@Slf4j
 public class InputHandler {
     private InputHandler() {
     }
@@ -18,7 +19,7 @@ public class InputHandler {
         String lowerCaseString = input.trim().toLowerCase();
 
         if (lowerCaseString.isEmpty()){
-            log.warning("You must enter a command");
+            log.warn("You must enter a command");
         } else {
             wordList = splitWords(lowerCaseString);
         }

@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LookCommand extends Command<String> {
+public class LookCommand extends Command {
     @Autowired
     private LookCommand(GameManager gameManager){
         super(gameManager);
     }
 
     @Override
-    public String execute(){
-        return getGameManager().getMapManager().lookCurrentRoom();
+    public void execute(){
+        getGameManager().getMapManager().lookCurrentRoom();
     }
 }

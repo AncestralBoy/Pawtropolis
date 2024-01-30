@@ -5,12 +5,12 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
-public abstract class Command <T>{
+public abstract class Command {
     private final GameManager gameManager;
 
     protected Command(GameManager gameManager) {
         this.gameManager = gameManager;
     }
 
-    public abstract T execute();
+    public abstract void execute();
 }

@@ -5,15 +5,16 @@ import com.example.Pawtropolis.game.model.Item;
 import com.example.Pawtropolis.game.service.GameManager;
 import com.example.Pawtropolis.game.service.console.InputReader;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
 
-@Log
+@Slf4j
 @Component
-public class GoCommand extends ParametrizedCommand<String> {
+public class GoCommand extends ParametrizedCommand {
     @Autowired
     private GoCommand(GameManager gameManager, ArrayList<String> parameter){
         super(gameManager, parameter);
@@ -24,42 +25,43 @@ public class GoCommand extends ParametrizedCommand<String> {
     }
 
     @Override
-    public String execute() {
+    public void execute() {
         String direction = getParameter().getFirst();
         if (getParameter().size() != 1) {
-            log.log(Level.WARNING, "Incorrect parameter for go command!");
-            return null;
+            log.warn("Incorrect parameter for go command!");
         }
         if (getGameManager().getMapManager().getRoomByDirection(direction).isLocked()) {
-            System.out.println("The door is locked: would you like to use an item to unlock it?");
+            log.info("The door is locked: would you like to use an item to unlock it?");
             String answer = InputReader.readString();
             switch (answer.toLowerCase()) {
                 case "y":
-                    System.out.println("Type the name of the chosen item");
+                    log.info("Type the name of the chosen item");
                     String itemName = InputReader.readString();
                     Item item = getGameManager().getPlayer().getItemInBagByString(itemName);
                     if (item != null) {
                         if (getGameManager().getMapManager().getLockedRoomByItem(item) != null) {
                             if (getGameManager().getMapManager().getLockedRoomByItem(item).equals(getGameManager().getMapManager().getRoomByDirection(direction))) {
                                 getGameManager().getMapManager().getRoomByDirection(direction).setLocked(false);
-                                System.out.println("You unlocked the door!");
+                                log.info("You unlocked the door!");
                                 getGameManager().getPlayer().removeItemFromBag(item);
-                                return getGameManager().getMapManager().changeCurrentRoom(getParameter().getFirst());
+                                getGameManager().getMapManager().changeCurrentRoom(getParameter().getFirst());
                             } else {
-                                return "This is not the right item";
+                                log.warn("This is not the right item");
                             }
                         }
                     } else {
-                        return "You don't have this Item";
+                        log.warn("You don't have this Item");
                     }
+                    break;
                 case "n":
-                    return null;
+                    break;
                 default:
-                    return "Incorrect choice";
+                    log.warn("Incorrect choice");
+                    break;
             }
         }
         else {
-            return getGameManager().getMapManager().changeCurrentRoom(getParameter().getFirst());
+            getGameManager().getMapManager().changeCurrentRoom(getParameter().getFirst());
         }
     }
 }
