@@ -165,6 +165,7 @@ public class MapManager {
         Direction currentDirection = Direction.getDirectionByString(direction);
 
         if (currentDirection == null) {
+            log.warn("Incorrect direction");
             return null;
         }
         else if (currentRoom.getConnectedRoomByDirection(currentDirection) != null) {
