@@ -1,6 +1,5 @@
 package com.example.Pawtropolis.game.service.console;
 
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

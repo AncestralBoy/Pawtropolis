@@ -7,7 +7,6 @@ import com.example.Pawtropolis.game.model.Player;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

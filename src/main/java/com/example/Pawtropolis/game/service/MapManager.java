@@ -8,7 +8,6 @@ import com.example.Pawtropolis.game.model.Item;
 import com.example.Pawtropolis.game.model.Room;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 
 @Slf4j
 @Getter
