@@ -32,7 +32,7 @@ public class CommandFactory{
             }
             return commandInstance;
         }
-        catch (NoSuchBeanDefinitionException e) {
+        catch (NoSuchBeanDefinitionException | NullPointerException e) {
             return this.context.getBean(UnknownCommand.class);
         }
     }
