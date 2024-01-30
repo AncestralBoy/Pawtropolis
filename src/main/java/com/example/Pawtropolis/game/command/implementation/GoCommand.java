@@ -26,7 +26,7 @@ public class GoCommand extends ParametrizedCommand {
     public void execute() {
         String direction = getParameter().getFirst();
         if(getParameter().size() != 1){
-            log.warn( "Incorrect parameter for go command!");
+            log.warn("Incorrect parameter for go command!");
         } else {
             if (getGameManager().getMapManager().getRoomByDirection(direction) != null) {
                 tryToMoveInGivenDirection(direction);
@@ -35,11 +35,7 @@ public class GoCommand extends ParametrizedCommand {
     }
 
     public boolean checkLockedDoor(String direction) {
-        if (getGameManager().getMapManager().getRoomByDirection(direction).isLocked()) {
-            return true;
-        } else {
-            return false;
-        }
+        return getGameManager().getMapManager().getRoomByDirection(direction).isLocked();
     }
 
     public void tryToMoveInGivenDirection(String direction) {
