@@ -165,14 +165,13 @@ public class MapManager {
         Direction currentDirection = Direction.getDirectionByString(direction);
 
         if (currentDirection == null) {
-            log.warn("Incorrect direction");
             return null;
         }
         else if (currentRoom.getConnectedRoomByDirection(currentDirection) != null) {
             return currentRoom.getConnectedRoomByDirection(currentDirection);
         }
         else {
-            log.warn("No room in this direction");
+            log.warn("There isn't a room in this direction");
             return null;
         }
     }
