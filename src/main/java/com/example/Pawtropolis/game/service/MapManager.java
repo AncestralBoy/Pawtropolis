@@ -35,7 +35,7 @@ public class MapManager {
 
     @PostConstruct
     public void generateMap(){
-        Room room2 = new Room("Thermal Baths", "a warm place, there is a lot of fog and hot water gaiser");
+        Room room2 = new Room("Thermal Baths", "a warm place, there is a lot of fog and hot water geyser");
         Room room3 = new Room("Cave", "a dark cave, you hear a lot of chilling noises");
         Room room4 = new Room("Mausoleum", "in front of a grave, but it’s too big to be a normal person");
         Room room5 = new Room("Temple", "an old temple, the stones are worn, there is moss everywhere, torches illuminate a flight of steps leading to a throne");
@@ -45,7 +45,7 @@ public class MapManager {
         Room room9 = new Room("Desert", "the air is hot and the place seems hostile");
         Room room10 = new Room( "Mountain", "you are on the top of a very high mountain, there is snow everywhere, the air is fresh");
         Room room11 = new Room( "Treasure Room", "You've never seen so much wealth in one place");
-        Room room12 = new Room( "Boos Room", "This place is unlike any you have encountered, the calmness that seems to be there snows you");
+        Room room12 = new Room( "Boss Room", "This place is unlike any you have encountered, the calmness that seems to be there snows you");
 
         Item item1 = new Item("Potion", "Heals 20 HP", 1);
         Item item2 = new Item("Penny", "A common coin", 2);
