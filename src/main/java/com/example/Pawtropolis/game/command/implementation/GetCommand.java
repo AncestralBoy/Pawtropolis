@@ -17,9 +17,6 @@ public class GetCommand extends ParametrizedCommand {
         super(gameManager, parameter);
     }
 
-    private GetCommand(GameManager gameManager){
-        super(gameManager);
-    }
     @Override
     public void execute() {
         if(getParameter().size() != 1){

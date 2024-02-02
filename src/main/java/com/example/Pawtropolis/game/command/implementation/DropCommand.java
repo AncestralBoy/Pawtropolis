@@ -12,9 +12,6 @@ import java.util.ArrayList;
 @Slf4j
 @Component
 public class DropCommand extends ParametrizedCommand {
-    private DropCommand(GameManager gameManager){
-        super(gameManager);
-    }
     @Autowired
     private DropCommand(GameManager gameManager, ArrayList<String> parameter){
         super(gameManager, parameter);

@@ -4,7 +4,6 @@ import com.example.Pawtropolis.game.service.GameManager;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -12,10 +11,6 @@ import java.util.List;
 public abstract class ParametrizedCommand extends Command {
     private List<String> parameter;
 
-    protected ParametrizedCommand(GameManager gameManager){
-        super(gameManager);
-        parameter = new ArrayList<>();
-    }
     protected ParametrizedCommand(GameManager gameManager, List<String> parameter) {
         super(gameManager);
         this.parameter = parameter;

@@ -18,10 +18,6 @@ public class GoCommand extends ParametrizedCommand {
         super(gameManager, parameter);
     }
 
-    private GoCommand(GameManager gameManager){
-        super(gameManager);
-    }
-
     @Override
     public void execute() {
         if(getParameter().size() != 1){
