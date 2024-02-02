@@ -100,7 +100,7 @@ public class Room {
     }
 
     public void look(){
-        log.warn("\n You are in " + getName() +  "\n" + getDescription() + "\nItems:\n" + getItemsNames()
+        log.info("\nYou are in " + getName() +  "\n" + getDescription() + "\nItems:\n" + getItemsNames()
                 +"\nNCP:\n" + getNpcNames() + "\n" + "Connected rooms: \n" + getConnectedRoomsDescription() + "\n");
 
     }
