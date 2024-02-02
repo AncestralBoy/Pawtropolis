@@ -22,18 +22,18 @@ public class GetCommand extends ParametrizedCommand {
     }
     @Override
     public void execute() {
-        Item item = getGameManager().getMapManager().getChosenItemInRoom(getParameter().getFirst());
-
         if(getParameter().size() != 1){
             log.warn("Incorrect parameter for get command!");
         }
-
-        if (item == null) {
-            log.warn("no {0} in room", getParameter());
-        } else if (!getGameManager().getPlayer().addItemInBag(item)) {
-            log.info("no enough space in bag");
-        } else {
-            getGameManager().getMapManager().removeItemInRoom(item);
+        else{
+            Item item = getGameManager().getMapManager().getChosenItemInRoom(getParameter().getFirst());
+            if (item == null) {
+                log.warn("no {0} in room", getParameter());
+            } else if (!getGameManager().getPlayer().addItemInBag(item)) {
+                log.info("no enough space in bag");
+            } else {
+                getGameManager().getMapManager().removeItemInRoom(item);
+            }
         }
     }
 }

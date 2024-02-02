@@ -24,10 +24,10 @@ public class GoCommand extends ParametrizedCommand {
 
     @Override
     public void execute() {
-        String direction = getParameter().getFirst();
         if(getParameter().size() != 1){
             log.warn("Incorrect parameter for go command!");
         } else {
+            String direction = getParameter().getFirst();
             if (getGameManager().getMapManager().getRoomByDirection(direction) != null) {
                 tryToMoveInGivenDirection(direction);
             }

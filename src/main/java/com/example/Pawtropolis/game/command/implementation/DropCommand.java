@@ -22,16 +22,17 @@ public class DropCommand extends ParametrizedCommand {
 
     @Override
     public void execute(){
-        Item item = getGameManager().getPlayer().getItemInBagByString(getParameter().getFirst());
-
         if(getParameter().size() != 1){
             log.warn("Incorrect parameter for drop command!");
         }
-        if (item == null) {
-            log.warn("no {0} in bag", getParameter());
-        } else  {
-            getGameManager().getPlayer().removeItemFromBag(item);
-            getGameManager().getMapManager().addItemInRoom(item);
+        else{
+            Item item = getGameManager().getPlayer().getItemInBagByString(getParameter().getFirst());
+            if (item == null) {
+                log.warn("no {0} in bag", getParameter());
+            } else  {
+                getGameManager().getPlayer().removeItemFromBag(item);
+                getGameManager().getMapManager().addItemInRoom(item);
+            }
         }
     }
 }
