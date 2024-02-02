@@ -20,7 +20,7 @@ public class GetCommand extends ParametrizedCommand {
     @Override
     public void execute() {
         if(getParameter().size() != 1){
-            log.warn("Incorrect parameter for get command!");
+            log.warn("Drop command needs a item as a parameter!");
         }
         else{
             Item item = getGameManager().getMapManager().getChosenItemInRoom(getParameter().getFirst());

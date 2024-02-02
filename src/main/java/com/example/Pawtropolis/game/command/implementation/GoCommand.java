@@ -21,7 +21,7 @@ public class GoCommand extends ParametrizedCommand {
     @Override
     public void execute() {
         if(getParameter().size() != 1){
-            log.warn("Incorrect parameter for go command!");
+            log.warn("Go command needs a direction as a parameter!");
         } else {
             String direction = getParameter().getFirst();
             if (getGameManager().getMapManager().getRoomByDirection(direction) != null) {
