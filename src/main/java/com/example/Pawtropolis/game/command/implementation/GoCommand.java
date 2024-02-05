@@ -30,11 +30,11 @@ public class GoCommand extends ParametrizedCommand {
         }
     }
 
-    public boolean checkLockedDoor(String direction) {
+    private boolean checkLockedDoor(String direction) {
         return getGameManager().getMapManager().getRoomByDirection(direction).isLocked();
     }
 
-    public void tryToMoveInGivenDirection(String direction) {
+    private void tryToMoveInGivenDirection(String direction) {
         if (checkLockedDoor(direction)) {
             log.info("The door is locked: would you like to use an item to unlock it?");
             String answer = InputReader.readString();
@@ -56,7 +56,7 @@ public class GoCommand extends ParametrizedCommand {
         }
     }
 
-    public void checkKeyItem(Item item, String direction) {
+    private void checkKeyItem(Item item, String direction) {
         if (item != null) {
             if (getGameManager().getMapManager().getLockedRoomByItem(item) != null) {
                 if (getGameManager().getMapManager().getLockedRoomByItem(item).equals(getGameManager().getMapManager().getRoomByDirection(direction))) {
@@ -72,7 +72,7 @@ public class GoCommand extends ParametrizedCommand {
         }
     }
 
-    public void unlockRoom(String direction, Item item) {
+    private void unlockRoom(String direction, Item item) {
         getGameManager().getMapManager().getRoomByDirection(direction).setLocked(false);
         log.info("You unlocked the door!");
         getGameManager().getPlayer().removeItemFromBag(item);
