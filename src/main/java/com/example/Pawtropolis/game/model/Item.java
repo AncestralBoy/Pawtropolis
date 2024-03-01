@@ -1,10 +1,8 @@
 package com.example.Pawtropolis.game.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
-@AllArgsConstructor
+@Data
 public class Item {
     private final String name;
     private final String description;

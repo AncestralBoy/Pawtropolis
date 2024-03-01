@@ -23,13 +23,11 @@ import java.util.Map;
 public class MapManager {
     private final ZooManager zooManager;
     private Room currentRoom;
-    private final Map<Item, Room> lockedRoomMap;
 
     @Autowired
     private MapManager(ZooManager zooManager){
         currentRoom = new Room("Basement", "a dark, cramped place");
         this.zooManager = zooManager;
-        lockedRoomMap = new HashMap<>();
     }
 
     @PostConstruct
@@ -99,15 +97,10 @@ public class MapManager {
         connectRooms(room10, room11, Direction.EAST);
         connectRooms(room11, room12, Direction.SOUTH);
 
-        setLockedRoom(room6);
-        setLockedRoom(room9);
-        setLockedRoom(room11);
-        setLockedRoom(room12);
-
-        setLockedRoomMap(item2, room6);
-        setLockedRoomMap(item4, room9);
-        setLockedRoomMap(item6, room11);
-        setLockedRoomMap(item7, room12);
+        room6.setLockedDoor(Direction.EAST, item2);
+        room9.setLockedDoor(Direction.NORTH, item4);
+        room11.setLockedDoor(Direction.EAST, item6);
+        room12.setLockedDoor(Direction.SOUTH, item7);
     }
 
     public void connectRooms(Room entryRoom, Room exitRoom, Direction direction){
@@ -129,18 +122,6 @@ public class MapManager {
                 exitRoom.addConnectedRoom(Direction.EAST, entryRoom);
             }
         }
-    }
-
-    public void setLockedRoom(Room room) {
-        room.setLocked(true);
-    }
-
-    public void setLockedRoomMap(Item keyItem, Room lockedRoom) {
-        lockedRoomMap.put(keyItem, lockedRoom);
-    }
-
-    public Room getLockedRoomByItem(Item keyItem) {
-        return lockedRoomMap.get(keyItem);
     }
 
     public void lookCurrentRoom() {

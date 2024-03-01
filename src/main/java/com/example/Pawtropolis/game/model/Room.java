@@ -2,7 +2,6 @@ package com.example.Pawtropolis.game.model;
 
 import com.example.Pawtropolis.animal.model.Animal;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -17,18 +16,16 @@ public class Room {
     private final String name;
     @Getter
     private final String description;
-    @Getter
-    @Setter
-    private boolean isLocked;
     private final Map<Direction, Room> connectedRooms;
+    private final Map<Direction, Door> lockedDoors;
     private final List<Item> items;
     private final List<Animal> npc;
 
     public Room(String name, String description) {
         this.name = name;
         this.description = description;
-        isLocked = false;
         connectedRooms = new EnumMap<>(Direction.class);
+        lockedDoors = new EnumMap<>(Direction.class);
         items = new ArrayList<>();
         npc = new ArrayList<>();
     }
@@ -83,17 +80,12 @@ public class Room {
         return itemsDescription;
     }
 
-    public String getDoorStatus() {
-        if (isLocked) {
-            return "closed";
-        } return "open";
-    }
 
     public String getConnectedRoomsDescription() {
         String connectedRoom;
         connectedRoom = connectedRooms.entrySet()
                 .stream()
-                .map(e -> e.getKey().getName() + ": " + e.getValue().getName() + ", " + e.getValue().getDoorStatus() + "; ")
+                .map(e -> e.getKey().getName() + ": " + e.getValue().getName() + ", " + e.getValue().getDoorsStatus(e.getKey()) + "; ")
                 .collect(Collectors.joining());
         connectedRoom = connectedRoom.substring(0,connectedRoom.length() - 2);
         return connectedRoom;
@@ -112,4 +104,32 @@ public class Room {
                 .findAny()
                 .orElse(null);
     }
+
+    private String getDoorsStatus(Direction direction){
+        Door door = lockedDoors.get(direction);
+        return door == null ? "open" : door.getDoorStatus();
+    }
+
+    public void setLockedDoor(Direction direction, Item key){
+        lockedDoors.put(direction, new Door(true ,key));
+    }
+
+    public boolean isLockedDoor(String direction){
+        Direction dir = Direction.getDirectionByString(direction);
+        if(lockedDoors.get(dir) == null){
+            return false;
+        }
+        return (lockedDoors.get(dir).isLocked());
+    }
+
+    public Item getKeyItemOfDoor(String direction){
+        Direction dir = Direction.getDirectionByString(direction);
+        return lockedDoors.get(dir).getKey();
+    }
+
+    public void unlockDoor(String direction){
+        Direction dir = Direction.getDirectionByString(direction);
+        lockedDoors.get(dir).setLocked(false);
+    }
+
 }
