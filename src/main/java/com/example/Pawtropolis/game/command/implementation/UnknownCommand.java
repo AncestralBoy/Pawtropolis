@@ -16,6 +16,6 @@ public class UnknownCommand extends Command {
 
     @Override
     public void execute(){
-        log.warn("Unknown command!");
+        System.out.println("Unknown command!");
     }
 }

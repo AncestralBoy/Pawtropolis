@@ -20,12 +20,12 @@ public class DropCommand extends ParametrizedCommand {
     @Override
     public void execute(){
         if(getParameter().size() != 1){
-            log.warn("Drop command needs a item as a parameter!");
+            System.out.println("Drop command needs a item as a parameter!");
         }
         else{
             Item item = getGameManager().getPlayer().getItemInBagByString(getParameter().getFirst());
             if (item == null) {
-                log.warn("no {0} in bag", getParameter());
+                System.out.println("no +" + getParameter() + " in bag");
             } else  {
                 getGameManager().getPlayer().removeItemFromBag(item);
                 getGameManager().getMapManager().addItemInRoom(item);

@@ -20,14 +20,14 @@ public class GetCommand extends ParametrizedCommand {
     @Override
     public void execute() {
         if(getParameter().size() != 1){
-            log.warn("Drop command needs a item as a parameter!");
+            System.out.println("Drop command needs a item as a parameter!");
         }
         else{
             Item item = getGameManager().getMapManager().getChosenItemInRoom(getParameter().getFirst());
             if (item == null) {
-                log.warn("no {0} in room", getParameter());
+                System.out.println("no " + getParameter() + " in room");
             } else if (!getGameManager().getPlayer().addItemInBag(item)) {
-                log.info("no enough space in bag");
+                System.out.println("no enough space in bag");
             } else {
                 getGameManager().getMapManager().removeItemInRoom(item);
             }

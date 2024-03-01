@@ -21,7 +21,7 @@ public class GoCommand extends ParametrizedCommand {
     @Override
     public void execute() {
         if(getParameter().size() != 1){
-            log.warn("Go command needs a direction as a parameter!");
+            System.out.println("Go command needs a direction as a parameter!");
         } else {
             String direction = getParameter().getFirst();
             if (getGameManager().getMapManager().getRoomByDirection(direction) != null) {
@@ -36,18 +36,18 @@ public class GoCommand extends ParametrizedCommand {
 
     private void tryToMoveInGivenDirection(String direction) {
         if (checkLockedDoor(direction)) {
-            log.info("The door is locked: would you like to use an item to unlock it? (y/n)");
+            System.out.println("The door is locked: would you like to use an item to unlock it? (y/n)");
             String answer = InputReader.readString();
             switch (answer.toLowerCase()) {
                 case "y":
-                    log.info("Type the name of the chosen item");
+                    System.out.println("Type the name of the chosen item");
                     String itemName = InputReader.readString();
                     checkKeyItem(itemName, direction);
                     break;
                 case "n":
                     return;
                 default:
-                    log.warn("Incorrect choice");
+                    System.out.println("Incorrect choice");
                     break;
             }
         } else {
@@ -61,16 +61,16 @@ public class GoCommand extends ParametrizedCommand {
             if (getGameManager().getMapManager().getRoomByDirection(direction).getKeyItemOfDoor(direction).equals(item)) {
                 unlockRoom(direction, item);
             } else {
-                log.warn("This is not the right item");
+                System.out.println("This is not the right item");
             }
         } else {
-            log.warn("You don't have this item");
+            System.out.println("You don't have this item");
         }
     }
 
     private void unlockRoom(String direction, Item item) {
         getGameManager().getMapManager().getRoomByDirection(direction).unlockDoor(direction);
-        log.info("You unlocked the door!");
+        System.out.println("You unlocked the door!");
         getGameManager().getPlayer().removeItemFromBag(item);
         getGameManager().getMapManager().changeCurrentRoom(direction);
     }

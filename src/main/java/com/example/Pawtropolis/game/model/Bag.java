@@ -29,10 +29,10 @@ public class Bag {
             String msg = items.stream()
                     .map(i -> i.getName() +", ")
                     .collect(Collectors.joining());
-            log.info("\n" + msg.substring(0, msg.length() - 2) + "\n" + currentFreeSlots + " slots remaining" );
+            System.out.println("\n" + msg.substring(0, msg.length() - 2) + "\n" + currentFreeSlots + " slots remaining" );
         }
         else
-            log.warn("No items in bag");
+            System.out.println("No items in bag");
     }
 
     public boolean addItem(Item item){

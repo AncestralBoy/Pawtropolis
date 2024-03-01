@@ -92,7 +92,7 @@ public class Room {
     }
 
     public void look(){
-        log.info("\nYou are in " + getName() +  "\n" + getDescription() + "\nItems:\n" + getItemsNames()
+        System.out.println("\nYou are in " + getName() +  "\n" + getDescription() + "\nItems:\n" + getItemsNames()
                 +"\nNCP:\n" + getNpcNames() + "\n" + "Connected rooms: \n" + getConnectedRoomsDescription() + "\n");
 
     }

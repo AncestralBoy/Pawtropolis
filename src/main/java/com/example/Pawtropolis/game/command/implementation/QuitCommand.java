@@ -17,7 +17,7 @@ public class QuitCommand extends Command {
 
     @Override
     public void execute() {
-        log.info("quit");
+        System.out.println("quit");
         getGameManager().setGameEnded(true);
     }
 }
