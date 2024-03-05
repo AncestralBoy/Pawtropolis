@@ -16,16 +16,14 @@ public class Room {
     private final String name;
     @Getter
     private final String description;
-    private final Map<Direction, Room> connectedRooms;
-    private final Map<Direction, Door> lockedDoors;
+    private final Map<Direction, Door> doors;
     private final List<Item> items;
     private final List<Animal> npc;
 
     public Room(String name, String description) {
         this.name = name;
         this.description = description;
-        connectedRooms = new EnumMap<>(Direction.class);
-        lockedDoors = new EnumMap<>(Direction.class);
+        doors = new EnumMap<>(Direction.class);
         items = new ArrayList<>();
         npc = new ArrayList<>();
     }
@@ -44,13 +42,6 @@ public class Room {
         this.npc.remove(npc);
     }
 
-    public Room getConnectedRoomByDirection(Direction direction){
-        return connectedRooms.get(direction);
-    }
-
-    public void addConnectedRoom(Direction direction, Room room){
-        connectedRooms.put(direction, room);
-    }
 
     public String getNpcNames() {
         String npcDescription;
@@ -80,12 +71,16 @@ public class Room {
         return itemsDescription;
     }
 
+    public Room getConnectedRoomByDirection(Direction currentDirection) {
+        return doors.get(currentDirection).getArrivalRoom();
+    }
+
 
     public String getConnectedRoomsDescription() {
         String connectedRoom;
-        connectedRoom = connectedRooms.entrySet()
+        connectedRoom = doors.entrySet()
                 .stream()
-                .map(e -> e.getKey().getName() + ": " + e.getValue().getName() + ", " + e.getValue().getDoorsStatus(e.getKey()) + "; ")
+                .map(e -> e.getKey().getName() + ": " + e.getValue().getArrivalRoom().getName() + ", " + e.getValue().getDoorStatus() + "; ")
                 .collect(Collectors.joining());
         connectedRoom = connectedRoom.substring(0,connectedRoom.length() - 2);
         return connectedRoom;
@@ -105,31 +100,29 @@ public class Room {
                 .orElse(null);
     }
 
-    private String getDoorsStatus(Direction direction){
-        Door door = lockedDoors.get(direction);
-        return door == null ? "open" : door.getDoorStatus();
+
+    public void addLockedDoor(Direction direction, Item key, Room startRoom, Room arrivalRoom){
+        doors.put(direction, new Door(true, key, startRoom, arrivalRoom));
     }
 
-    public void setLockedDoor(Direction direction, Item key){
-        lockedDoors.put(direction, new Door(true ,key));
+    public void addOpenDoor(Direction direction, Room startRoom, Room arrivalRoom){
+        doors.put(direction, new Door(false, startRoom, arrivalRoom));
     }
 
     public boolean isLockedDoor(String direction){
         Direction dir = Direction.getDirectionByString(direction);
-        if(lockedDoors.get(dir) == null){
-            return false;
-        }
-        return (lockedDoors.get(dir).isLocked());
+        return (doors.get(dir).isLocked());
     }
 
     public Item getKeyItemOfDoor(String direction){
         Direction dir = Direction.getDirectionByString(direction);
-        return lockedDoors.get(dir).getKey();
+        return doors.get(dir).getKey();
     }
 
     public void unlockDoor(String direction){
         Direction dir = Direction.getDirectionByString(direction);
-        lockedDoors.get(dir).setLocked(false);
+        doors.get(dir).setLocked(false);
     }
+
 
 }

@@ -1,6 +1,7 @@
 package com.example.Pawtropolis.game.command.implementation;
 
 import com.example.Pawtropolis.game.command.ParametrizedCommand;
+import com.example.Pawtropolis.game.model.Direction;
 import com.example.Pawtropolis.game.model.Item;
 import com.example.Pawtropolis.game.service.GameManager;
 import com.example.Pawtropolis.game.service.console.InputReader;
@@ -31,7 +32,7 @@ public class GoCommand extends ParametrizedCommand {
     }
 
     private boolean checkLockedDoor(String direction) {
-        return getGameManager().getMapManager().getRoomByDirection(direction).isLockedDoor(direction);
+        return getGameManager().getMapManager().getCurrentRoom().isLockedDoor(direction);
     }
 
     private void tryToMoveInGivenDirection(String direction) {
@@ -58,7 +59,7 @@ public class GoCommand extends ParametrizedCommand {
     private void checkKeyItem(String itemName, String direction) {
         Item item = getGameManager().getPlayer().getItemInBagByString(itemName);
         if (item != null) {
-            if (getGameManager().getMapManager().getRoomByDirection(direction).getKeyItemOfDoor(direction).equals(item)) {
+            if (getGameManager().getMapManager().getCurrentRoom().getKeyItemOfDoor(direction).equals(item)) {
                 unlockRoom(direction, item);
             } else {
                 System.out.println("This is not the right item");
@@ -69,7 +70,8 @@ public class GoCommand extends ParametrizedCommand {
     }
 
     private void unlockRoom(String direction, Item item) {
-        getGameManager().getMapManager().getRoomByDirection(direction).unlockDoor(direction);
+        getGameManager().getMapManager().getCurrentRoom().unlockDoor(direction);
+        getGameManager().getMapManager().getRoomByDirection(direction).unlockDoor(Direction.getOppositeDirection(direction));
         System.out.println("You unlocked the door!");
         getGameManager().getPlayer().removeItemFromBag(item);
         getGameManager().getMapManager().changeCurrentRoom(direction);

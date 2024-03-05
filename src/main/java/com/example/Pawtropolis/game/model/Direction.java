@@ -43,4 +43,24 @@ public enum Direction {
             }
         }
     }
+
+    public static String getOppositeDirection(String direction){
+        switch (direction.toLowerCase()){
+            case "east" -> {
+                return "west";
+            }
+            case "west" -> {
+                return "east";
+            }
+            case "north" -> {
+                return "south";
+            }
+            case "south" -> {
+                return "north";
+            }
+            default -> {
+                return null;
+            }
+        }
+    }
 }

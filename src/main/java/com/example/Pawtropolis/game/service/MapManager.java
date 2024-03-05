@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Getter
@@ -86,43 +84,62 @@ public class MapManager {
         room11.addItem(item10);
 
         //Collegamento delle stanze
-        connectRooms(currentRoom, room3, Direction.WEST);
-        connectRooms(currentRoom, room6, Direction.EAST);
-        connectRooms(currentRoom, room2, Direction.SOUTH);
-        connectRooms(room3, room4, Direction.NORTH);
-        connectRooms(room3, room5, Direction.WEST);
-        connectRooms(room6, room8, Direction.NORTH);
-        connectRooms(room8, room9, Direction.NORTH);
-        connectRooms(room9, room10, Direction.EAST);
-        connectRooms(room10, room11, Direction.EAST);
-        connectRooms(room11, room12, Direction.SOUTH);
+        connectRoomsWithOpenDoor(currentRoom, room3, Direction.WEST);
+        connectRoomsWithLockedDoor(currentRoom, room6, item2, Direction.EAST);
+        connectRoomsWithOpenDoor(currentRoom, room2, Direction.SOUTH);
+        connectRoomsWithOpenDoor(room3, room4, Direction.NORTH);
+        connectRoomsWithOpenDoor(room3, room5, Direction.WEST);
+        connectRoomsWithOpenDoor(room6, room8, Direction.NORTH);
+        connectRoomsWithLockedDoor(room8, room9, item4, Direction.NORTH);
+        connectRoomsWithOpenDoor(room9, room10, Direction.EAST);
+        connectRoomsWithLockedDoor(room10, room11, item6, Direction.EAST);
+        connectRoomsWithLockedDoor(room11, room12, item7, Direction.SOUTH);
 
-        room6.setLockedDoor(Direction.EAST, item2);
-        room9.setLockedDoor(Direction.NORTH, item4);
-        room11.setLockedDoor(Direction.EAST, item6);
-        room12.setLockedDoor(Direction.SOUTH, item7);
     }
 
-    public void connectRooms(Room entryRoom, Room exitRoom, Direction direction){
+    public void connectRoomsWithOpenDoor(Room entryRoom, Room exitRoom, Direction direction){
         switch (direction) {
             case NORTH -> {
-                entryRoom.addConnectedRoom(Direction.NORTH, exitRoom);
-                exitRoom.addConnectedRoom(Direction.SOUTH, entryRoom);
+                entryRoom.addOpenDoor(direction, entryRoom, exitRoom);
+                exitRoom.addOpenDoor(Direction.SOUTH, exitRoom, entryRoom);
             }
             case SOUTH -> {
-                entryRoom.addConnectedRoom(Direction.SOUTH, exitRoom);
-                exitRoom.addConnectedRoom(Direction.NORTH, entryRoom);
+                entryRoom.addOpenDoor(direction, entryRoom, exitRoom);
+                exitRoom.addOpenDoor(Direction.NORTH, exitRoom, entryRoom);
             }
             case EAST -> {
-                entryRoom.addConnectedRoom(Direction.EAST, exitRoom);
-                exitRoom.addConnectedRoom(Direction.WEST, entryRoom);
+                entryRoom.addOpenDoor(direction, entryRoom, exitRoom);
+                exitRoom.addOpenDoor(Direction.WEST, exitRoom, entryRoom);
             }
             case WEST -> {
-                entryRoom.addConnectedRoom(Direction.WEST, exitRoom);
-                exitRoom.addConnectedRoom(Direction.EAST, entryRoom);
+                entryRoom.addOpenDoor(direction, entryRoom, exitRoom);
+                exitRoom.addOpenDoor(Direction.EAST, exitRoom, entryRoom);
             }
         }
     }
+
+    public void connectRoomsWithLockedDoor(Room entryRoom, Room exitRoom, Item key, Direction direction){
+        switch (direction) {
+            case NORTH -> {
+                entryRoom.addLockedDoor(direction, key, entryRoom, exitRoom);
+                exitRoom.addLockedDoor(Direction.SOUTH, key, exitRoom, entryRoom);
+            }
+            case SOUTH -> {
+                entryRoom.addLockedDoor(direction, key, entryRoom, exitRoom);
+                exitRoom.addLockedDoor(Direction.NORTH, key, exitRoom, entryRoom);
+            }
+            case EAST -> {
+                entryRoom.addLockedDoor(direction, key, entryRoom, exitRoom);
+                exitRoom.addLockedDoor(Direction.WEST, key, exitRoom, entryRoom);
+            }
+            case WEST -> {
+                entryRoom.addLockedDoor(direction, key, entryRoom, exitRoom);
+                exitRoom.addLockedDoor(Direction.EAST, key, exitRoom, entryRoom);
+            }
+        }
+    }
+
+
 
     public void lookCurrentRoom() {
         getCurrentRoom().look();
@@ -160,4 +177,5 @@ public class MapManager {
         currentRoom = getRoomByDirection(direction);
         getCurrentRoom().look();
     }
+
 }
